@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#122b35" />
+  <meta name="description" content="Agenda e checklist pessoal com acompanhamento gradual dos gatilhos do tabagismo." />
+  <title>Minha agenda e hábitos</title>
+  <style>
+    :root { color-scheme: light; --ink:#18323b; --ink-soft:#527079; --line:#dce7e8; --bg:#f3f7f7; --surface:#ffffff; --accent:#147e78; --accent-dark:#0a635f; --mint:#e7f6f1; --warning:#915b16; --warning-bg:#fff4df; --danger:#aa4d47; --danger-bg:#fff0ee; --shadow:0 14px 36px rgba(19,48,54,.06); }
+    * {box-sizing:border-box}
+    html {scroll-behavior:smooth}
+    body {margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.45}
+    button,input,select,textarea {font:inherit}
+    button {cursor:pointer}
+    .shell {max-width:880px;margin:auto;padding:0 16px 100px}
+    .masthead {background:#122b35;color:white;margin:0 -16px 22px;padding:28px max(16px,calc((100vw - 880px)/2 + 16px)) 25px;position:relative;overflow:hidden}
+    .masthead:after {content:"";width:250px;height:250px;border:1px solid rgba(126,232,204,.15);border-radius:50%;position:absolute;right:-65px;top:-115px;box-shadow:0 0 0 45px rgba(126,232,204,.035),0 0 0 90px rgba(126,232,204,.025);pointer-events:none}
+    .eyebrow {margin:0 0 7px;color:#86d6bf;font-size:.71rem;font-weight:750;letter-spacing:.15em;text-transform:uppercase}
+    h1 {margin:0;font-size:clamp(1.8rem,4vw,2.4rem);line-height:1.1;letter-spacing:-.045em}
+    .masthead p:last-child {margin:10px 0 0;color:#c5d7d7;font-size:.93rem;max-width:550px}
+    .toolbar {display:flex;flex-wrap:wrap;align-items:end;gap:10px;margin-bottom:14px}
+    .date-wrap {display:flex;flex:1;align-items:end;gap:8px;min-width:250px}
+    .date-field {flex:1;min-width:0}
+    label.field-label {display:block;font-size:.75rem;font-weight:750;letter-spacing:.02em;color:var(--ink-soft);margin-bottom:5px}
+    input[type=date],input[type=number],input[type=time],input[type=text],select,textarea {width:100%;border:1px solid #cddcdd;border-radius:11px;background:#fff;padding:11px 12px;color:var(--ink);outline-offset:2px;min-height:45px}
+    textarea {resize:vertical;min-height:90px}
+    input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible {outline:3px solid #87d4cd;outline-offset:2px}
+    .icon-btn,.btn {border:1px solid var(--line);border-radius:11px;background:var(--surface);padding:10px 14px;min-height:45px;color:var(--ink);font-weight:700;white-space:nowrap}
+    .icon-btn {min-width:44px;padding:10px}
+    .btn.primary {background:var(--accent);border-color:var(--accent);color:white}
+    .btn.danger {color:var(--danger);border-color:#e9b8b3;background:white}
+    .btn.small {padding:7px 10px;min-height:34px;font-size:.82rem}
+    .icon-btn:hover,.btn:hover {filter:brightness(.97)}
+    .tabs {display:grid;grid-template-columns:repeat(4,1fr);background:#e8eeee;border-radius:13px;padding:4px;gap:3px;margin-bottom:18px}
+    .tab {border:0;background:transparent;color:#527078;min-height:43px;border-radius:10px;font-size:.87rem;font-weight:750}
+    .tab[aria-selected=true] {background:white;box-shadow:0 2px 9px #1c3b4520;color:var(--ink)}
+    .view {display:none}.view.active {display:block}
+    .card {background:var(--surface);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+    .card-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+    .card-heading h2,.section-title {margin:0;font-size:1.1rem;letter-spacing:-.018em}
+    .card-heading p,.muted {color:var(--ink-soft);font-size:.86rem;margin:5px 0 0}
+    .pill {display:inline-flex;align-items:center;border-radius:99px;background:#edf3f3;color:#365a63;padding:5px 9px;font-size:.72rem;font-weight:800;white-space:nowrap}
+    .pill.accent {color:#087168;background:#def4eb}.pill.warn {color:var(--warning);background:var(--warning-bg)}
+    .banner {border-radius:15px;background:var(--mint);padding:16px 17px;margin-bottom:14px;border:1px solid #cfe8e0}
+    .banner strong {display:block;color:#0b5e5b;font-size:1.02rem}.banner p {margin:6px 0 0;color:#426b68;font-size:.9rem}
+    .progress-track {height:8px;border-radius:999px;overflow:hidden;background:#e6eeee;margin-top:12px}
+    .progress-fill {height:100%;width:0%;background:#1b9280;border-radius:inherit;transition:width .2s}
+    .statline {display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.78rem;color:var(--ink-soft);margin-top:7px}
+    .task {display:flex;align-items:flex-start;gap:11px;padding:12px 0;border-top:1px solid #edf1f1}
+    .task:first-child {border-top:0}
+    .task input[type=checkbox] {appearance:none;flex:none;margin:3px 0 0;width:23px;height:23px;border:2px solid #acc6c5;border-radius:7px;position:relative;background:white}
+    .task input[type=checkbox]:checked {background:var(--accent);border-color:var(--accent)}
+    .task input[type=checkbox]:checked:after {content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid white;border-width:0 2px 2px 0;transform:rotate(45deg)}
+    .task-main {flex:1;min-width:0}
+    .task-title {display:block;line-height:1.4;font-size:.94rem;font-weight:600}
+    .task-done .task-title {color:#81999c;text-decoration:line-through}
+    .task-sub {display:block;color:var(--ink-soft);font-size:.77rem;margin-top:4px}
+    .time {font-weight:800;color:#176c68;white-space:nowrap;font-size:.81rem;letter-spacing:-.01em;margin-left:auto;margin-top:3px}
+    .habit-row {padding:13px 0;border-top:1px solid #edf1f1;display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .habit-row:first-child {border-top:0}
+    .habit-row label {flex:1;font-weight:600;font-size:.92rem;min-width:0}
+    .habit-row select {flex:0 0 145px;width:145px;min-height:40px;padding:8px 7px;font-size:.82rem}
+    .habit-row .status-ok {border-color:#a6d7c6;background:#f2fbf6;color:#17684f}
+    .habit-row .status-slip {border-color:#e6b5ae;background:#fff6f5;color:#994941}
+    .habit-row .status-na {background:#f2f5f6;color:#60777c}
+    .grid2 {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .hint {background:#f5f9f8;border:1px solid #e1edeb;border-radius:11px;padding:12px;color:#47656a;font-size:.83rem;margin-top:12px}
+    .muted-block {padding:16px;border:1px dashed #bdcdce;background:#f8faf9;border-radius:12px;color:var(--ink-soft);font-size:.87rem}
+    .weekday-card {display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #ecf0f0}
+    .weekday-card:last-child {border-bottom:0}
+    .weekday-card div:nth-child(2) {flex:1;min-width:0}
+    .weekday-card h3 {margin:0;font-size:.93rem}.weekday-card p {margin:3px 0 0;font-size:.76rem;color:var(--ink-soft)}
+    .date-chip {background:#edf4f3;border:1px solid #dbe9e7;border-radius:11px;min-width:51px;text-align:center;padding:6px}
+    .date-chip b {font-size:1rem;display:block}.date-chip small {font-size:.68rem;color:var(--ink-soft)}
+    .day-metrics {display:flex;gap:10px;flex-wrap:wrap;color:var(--ink-soft);font-size:.8rem}
+    .milestone {border:1px solid var(--line);border-radius:13px;padding:15px;margin:10px 0;background:white}
+    .milestone.current {border-color:#8fc7be;background:#f1fbf7}
+    .milestone h3 {font-size:.94rem;margin:0}.milestone p {font-size:.81rem;color:var(--ink-soft);margin:7px 0 0}
+    .milestone .top {display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .chart-row {display:grid;grid-template-columns:67px 1fr 46px;align-items:center;gap:10px;margin-top:10px;font-size:.78rem;color:var(--ink-soft)}
+    .bar {background:#e7eeee;height:10px;border-radius:99px;overflow:hidden}.bar span {display:block;background:#4b9b91;height:100%;border-radius:99px}
+    .edit-row {display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:8px;padding:8px 0;border-top:1px solid #e9efef}
+    .edit-row:first-of-type {border-top:0}
+    .edit-row .btn {white-space:nowrap}
+    .edit-row.chore {grid-template-columns:1fr auto}
+    .editing-help {font-size:.82rem;color:var(--ink-soft);margin:0 0 14px}
+    .form-stack {display:grid;gap:10px}
+    .edit-week {display:grid;grid-template-columns:1fr;gap:6px;border-top:1px solid #e9efef;padding-top:12px;margin-top:12px}
+    .edit-week strong {font-size:.88rem}
+    .file-input {display:none}
+    .action-row {display:flex;flex-wrap:wrap;gap:8px}
+    .toast {position:fixed;bottom:17px;left:50%;transform:translateX(-50%);padding:12px 16px;background:#18343a;color:white;border-radius:11px;box-shadow:0 14px 30px #061a1f30;max-width:calc(100% - 28px);font-size:.86rem;z-index:10;display:none}
+    .toast.show {display:block}
+    footer {text-align:center;color:#6a8285;font-size:.76rem;padding:16px 12px 25px}
+    @media(max-width:600px) {
+      .shell {padding:0 12px 95px}
+      .masthead {margin:0 -12px 17px;padding:25px 16px 23px}
+      .masthead p:last-child {font-size:.85rem}
+      .card {padding:14px}
+      .tab {font-size:.76rem;min-height:43px}
+      .date-wrap {min-width:100%}
+      .habit-row {align-items:stretch;flex-direction:column;gap:8px}
+      .habit-row select {width:100%;flex:auto}
+      .grid2 {grid-template-columns:1fr}
+      .edit-row {grid-template-columns:107px 1fr;gap:6px}
+      .edit-row .btn {grid-column:2;justify-self:end}
+      .edit-row.chore {grid-template-columns:1fr auto}
+      .edit-row.chore .btn {grid-column:2}
+      .task {gap:9px}
+      .task-title {font-size:.89rem}
+      .time {font-size:.75rem;margin-left:3px}
+    }
+    @media print {.tabs,.toolbar,.edit-only,.btn,footer{display:none!important}.view{display:block!important}.card{box-shadow:none;break-inside:avoid}.shell{max-width:100%}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead">
+      <p class="eyebrow">Planejamento pessoal</p>
+      <h1>Minha agenda<br />e novos hábitos</h1>
+      <p>Rotina, casa, estudos e um plano progressivo para desfazer as associações com o cigarro.</p>
+    </header>
+    <div class="toolbar">
+      <div class="date-wrap">
+        <button class="icon-btn" id="prevDay" title="Dia anterior" aria-label="Dia anterior">‹</button>
+        <div class="date-field"><label class="field-label" for="currentDate">Data selecionada</label><input type="date" id="currentDate" /></div>
+        <button class="icon-btn" id="nextDay" title="Próximo dia" aria-label="Próximo dia">›</button>
+      </div>
+      <button class="btn" id="todayBtn">Ir para hoje</button>
+    </div>
+    <nav class="tabs" aria-label="Seções da agenda">
+      <button class="tab" data-tab="day" aria-selected="true">Meu dia</button>
+      <button class="tab" data-tab="week" aria-selected="false">Semana</button>
+      <button class="tab" data-tab="progress" aria-selected="false">Evolução</button>
+      <button class="tab" data-tab="settings" aria-selected="false">Editar</button>
+    </nav>
+    <main>
+      <section id="view-day" class="view active" aria-label="Checklist do dia"></section>
+      <section id="view-week" class="view" aria-label="Visão semanal"></section>
+      <section id="view-progress" class="view" aria-label="Acompanhamento"></section>
+      <section id="view-settings" class="view" aria-label="Personalizar o cronograma"></section>
+    </main>
+    <footer>Os dados ficam neste navegador, neste aparelho. Faça backups no menu Editar para não perdê-los.</footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <input type="file" class="file-input" id="importFile" accept="application/json,.json" />
+<script>
+(() => {
+  "use strict";
+  const KEY = "agenda-habitos-sem-tabaco-v1";
+  const dayNames = ["Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado","Domingo"];
+  const defaults = () => ({
+    startDate:"2026-11-10",
+    schedule:[
+      {id:"s1",time:"05h20 – 05h50",title:"Acordar, higiene e preparar-se para a academia"},
+      {id:"s2",time:"06h00 – 07h00",title:"Academia"},
+      {id:"s3",time:"07h00 – 08h00",title:"Banho, café da manhã e deslocamento"},
+      {id:"s4",time:"08h00 – 18h00",title:"Trabalho"},
+      {id:"s5",time:"18h00 – 18h30",title:"Tarefas domésticas diárias e específicas do dia"},
+      {id:"s6",time:"18h30 – 19h15",title:"Preparar a janta"},
+      {id:"s7",time:"19h15 – 19h30",title:"Jantar e organizar a cozinha"},
+      {id:"s8",time:"19h30 – 21h30",title:"Estudos — 2 horas"},
+      {id:"s9",time:"21h30 – 22h00",title:"Preparar roupas, mochila e itens do dia seguinte"},
+      {id:"s10",time:"22h00 – 22h30",title:"Higiene pessoal e preparação para dormir"}
+    ],
+    chores:[
+      ["Verificar e lavar a louça","Verificar roupas para estender ou recolher","Conferir e recolher o lixo, se necessário","Separar e organizar as roupas sujas"],
+      ["Verificar e lavar a louça","Verificar roupas para estender ou recolher","Conferir e recolher o lixo, se necessário","Limpar a pia e o fogão"],
+      ["Verificar e lavar a louça","Verificar roupas para estender ou recolher","Conferir e recolher o lixo, se necessário","Dobrar e guardar as roupas limpas"],
+      ["Verificar e lavar a louça","Verificar roupas para estender ou recolher","Conferir e recolher o lixo, se necessário","Conferir os alimentos e planejar as próximas refeições"],
+      ["Verificar e lavar a louça","Verificar roupas para estender ou recolher","Conferir e recolher o lixo, se necessário","Organizar a cozinha para o fim de semana"],
+      [],[]
+    ].map((a,d)=>a.map((title,i)=>({id:"c"+d+"-"+i,title}))),
+    habits:[
+      {title:"Celular sem cigarro",guidance:"Usar redes sociais e assistir a vídeos sem acender um cigarro.",checks:[{id:"h1",title:"Usei o celular sem fumar"}]},
+      {title:"Bebidas e momentos sentado",guidance:"Tomar café, suco ou outra bebida e ficar sentado sem associar isso ao tabaco.",checks:[{id:"h2",title:"Tomei bebidas ou fiquei sentado sem fumar"}]},
+      {title:"Depois das refeições",guidance:"Substituir o cigarro por escovar os dentes ou caminhar um pouco.",checks:[{id:"h3a",title:"Depois do café da manhã, não fumei"},{id:"h3b",title:"Depois do almoço, não fumei"},{id:"h3c",title:"Depois do jantar, não fumei"}]},
+      {title:"Antes de dormir",guidance:"Criar um ritual noturno sem cigarro: higiene, leitura ou relaxamento.",checks:[{id:"h4",title:"Antes de dormir, não fumei"}]},
+      {title:"Ao acordar",guidance:"Começar o dia com água, banho e preparação para a academia, sem cigarro.",checks:[{id:"h5",title:"Ao acordar, não fumei"}]},
+      {title:"Cerveja",guidance:"Gatilho mais difícil: considere evitar álcool neste período; se beber, tente fazê-lo sem fumar.",checks:[{id:"h6",title:"Se bebi cerveja, não fumei"}]}
+    ],
+    records:{}
+  });
+  const el = id => document.getElementById(id);
+  const esc = value => String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[c]);
+  const localISO = date => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`;
+  const asDate = iso => {const [y,m,d]=String(iso).split("-").map(Number);return new Date(y,m-1,d,12)};
+  const plusDays=(iso,n)=>{let d=asDate(iso);d.setDate(d.getDate()+n);return localISO(d)};
+  const dayIndex=iso=>(asDate(iso).getDay()+6)%7;
+  const fullDate=iso=>new Intl.DateTimeFormat("pt-BR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(asDate(iso));
+  const shortDate=iso=>new Intl.DateTimeFormat("pt-BR",{day:"2-digit",month:"2-digit"}).format(asDate(iso));
+  const differenceDays=(a,b)=>Math.round((asDate(a)-asDate(b))/86400000);
+  const download=(filename,text,mime)=>{const blob=new Blob([text],{type:mime});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)};
+  function load(){try{const saved=JSON.parse(localStorage.getItem(KEY));if(saved&&typeof saved==="object"&&Array.isArray(saved.schedule)&&Array.isArray(saved.chores)&&Array.isArray(saved.habits)&&saved.records&&typeof saved.records==="object")return saved;}catch(e){}return defaults()}
+  let state=load(), selectedDate=localISO(new Date()), tab="day", editChoreDay=0, toastTimer;
+  const record=iso=>state.records[iso] || (state.records[iso]={tasks:{},habits:{},cigarettes:"",urge:"",notes:""});
+  const peek=iso=>state.records[iso]||{tasks:{},habits:{},cigarettes:"",urge:"",notes:""};
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){toast("Não foi possível salvar. Exporte um backup.")}};
+  const toast=msg=>{let e=el("toast");e.textContent=msg;e.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.classList.remove("show"),2900)};
+  const weekIdx=iso=>Math.min(5,Math.max(0,Math.floor(differenceDays(iso,state.startDate)/7)));
+  const weekRaw=iso=>Math.floor(differenceDays(iso,state.startDate)/7);
+  const activeHabits=iso=>state.habits.slice(0,weekIdx(iso)+1);
+  const dayChores=iso=>state.chores[dayIndex(iso)]||[];
+  const dayRoutine=iso=>dayIndex(iso)<5?state.schedule:[];
+  const dayChecks=iso=>[...dayRoutine(iso),...dayChores(iso)];
+  function getTaskProgress(iso){const r=peek(iso);let t=dayChecks(iso);return {done:t.filter(x=>r.tasks&&r.tasks[x.id]).length,total:t.length}}
+  function getHabitProgress(iso){const r=peek(iso);const hs=activeHabits(iso).flatMap(h=>h.checks);const vals=hs.map(h=>r.habits?.[h.id]||"");return {success:vals.filter(x=>x==="ok").length,na:vals.filter(x=>x==="na").length,slip:vals.filter(x=>x==="slip").length,total:hs.length}}
+  function progress(done,total){let p=total?Math.round(done*100/total):0;return `<div class="progress-track" role="progressbar" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill" style="width:${p}%"></div></div>`}
+  function heading(title,subtitle,pill){return `<div class="card-heading"><div><h2>${esc(title)}</h2>${subtitle?`<p>${esc(subtitle)}</p>`:""}</div>${pill?`<span class="pill">${esc(pill)}</span>`:""}</div>`}
+  function checkedTask(t,iso){const ck=!!peek(iso).tasks?.[t.id];return `<label class="task ${ck?"task-done":""}"><input type="checkbox" data-type="task" data-id="${esc(t.id)}" data-date="${iso}" ${ck?"checked":""}/><span class="task-main"><span class="task-title">${esc(t.title)}</span></span>${t.time?`<span class="time">${esc(t.time)}</span>`:""}</label>`}
+  function renderDay(){const iso=selectedDate, wd=dayIndex(iso), r=peek(iso), p=getTaskProgress(iso), hp=getHabitProgress(iso), raw=weekRaw(iso), current=weekIdx(iso);
+    let bannerTitle=raw<0?"Período de preparação":raw>=6?"Manutenção dos seis hábitos":`Semana ${current+1} de 6 · ${state.habits[current].title}`;
+    let bannerText=raw>=6?"Continue praticando todas as associações. Os seis grupos de hábitos permanecem ativos.":raw<0?"O plano começará em "+shortDate(state.startDate)+". Você pode registrar seus hábitos desde já.":state.habits[current].guidance;
+    const sections=[`<div class="banner"><strong>${esc(bannerTitle)}</strong><p>${esc(bannerText)} As metas são acumulativas.</p></div>`,
+    `<div class="card">${heading("Panorama do dia",fullDate(iso))}<div class="grid2"><div><strong>${p.done}/${p.total}</strong> <span class="muted">atividades concluídas</span>${progress(p.done,p.total)}</div><div><strong>${hp.success}/${hp.total}</strong> <span class="muted">situações sem fumar</span>${progress(hp.success,hp.total)}</div></div><div class="statline"><span>${hp.na} não ocorreram</span><span>${hp.slip} em que houve cigarro</span></div></div>`];
+    if(wd<5){sections.push(`<div class="card">${heading("Rotina e horários","Segunda a sexta · marque cada etapa ao concluí-la",`${p.done}/${p.total}`)}${state.schedule.length?state.schedule.map(x=>checkedTask(x,iso)).join(""):'<div class="muted-block">Nenhuma atividade configurada.</div>'}</div>`)}
+    else{sections.push(`<div class="card">${heading("Fim de semana","A agenda de trabalho e academia fica livre para você organizar como preferir.")}<div class="muted-block">O acompanhamento dos hábitos relacionados ao cigarro continua aos sábados e domingos.</div></div>`)}
+    if(dayChores(iso).length){sections.push(`<div class="card">${heading("Tarefas domésticas",wd<5?"Preferencialmente das 18h às 18h30":"Tarefas opcionais do dia")}${dayChores(iso).map(x=>checkedTask(x,iso)).join("")}</div>`)}
+    let habitsHtml=activeHabits(iso).map((h,i)=>`<div style="margin-top:${i?"14":"0"}px"><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span class="pill accent">Etapa ${i+1}</span><strong style="font-size:.92rem">${esc(h.title)}</strong></div>${h.checks.map(c=>{const value=r.habits?.[c.id]||"";return `<div class="habit-row"><label for="habit-${esc(c.id)}">${esc(c.title)}</label><select id="habit-${esc(c.id)}" class="${value?"status-"+value:""}" data-type="habit" data-id="${esc(c.id)}" data-date="${iso}"><option value="" ${!value?"selected":""}>Pendente</option><option value="ok" ${value==="ok"?"selected":""}>Sem fumar</option><option value="na" ${value==="na"?"selected":""}>Não ocorreu</option><option value="slip" ${value==="slip"?"selected":""}>Fumei</option></select></div>`}).join("")}</div>`).join("");
+    sections.push(`<div class="card">${heading("Checklist: sem cigarro","Marque o resultado de cada situação, sem apagar dificuldades.",`${hp.success} sem fumar`)}${habitsHtml}<div class="hint"><strong>Como registrar:</strong> “Sem fumar” quando enfrentou o gatilho sem cigarro; “Não ocorreu” quando a situação não aconteceu; “Fumei” quando houve cigarro. Um tropeço não reinicia o plano.</div></div>`);
+    sections.push(`<div class="card">${heading("Registro diário","Acompanhe o consumo total e identifique padrões.")}<div class="grid2"><div><label class="field-label" for="cigarettes">Cigarros fumados hoje</label><input type="number" min="0" step="1" id="cigarettes" data-type="record" data-field="cigarettes" data-date="${iso}" value="${esc(r.cigarettes)}" placeholder="Ex.: 12" /></div><div><label class="field-label" for="urge">Maior vontade de fumar (0–10)</label><select id="urge" data-type="record" data-field="urge" data-date="${iso}"><option value="">Não informado</option>${Array.from({length:11},(_,i)=>`<option ${String(r.urge)===String(i)?"selected":""} value="${i}">${i}</option>`).join("")}</select></div></div><div style="margin-top:13px"><label class="field-label" for="notes">O que funcionou? O que foi mais difícil?</label><textarea id="notes" data-type="record" data-field="notes" data-date="${iso}" placeholder="Ex.: Após o almoço fui caminhar e a vontade diminuiu.">${esc(r.notes)}</textarea></div><div class="hint">Evite compensar um cigarro que deixou de fumar em outro momento do dia. Registrar a quantidade ajuda a perceber a evolução.</div></div>`);
+    el("view-day").innerHTML=sections.join("");
+  }
+  function weekMon(iso){return plusDays(iso,-dayIndex(iso))}
+  function renderWeek(){let mon=weekMon(selectedDate), end=plusDays(mon,6), html=`<div class="card">${heading("Resumo da semana",`${shortDate(mon)} a ${shortDate(end)} · clique em um dia para abrir o checklist`)}`;
+    for(let i=0;i<7;i++){const iso=plusDays(mon,i),p=getTaskProgress(iso),h=getHabitProgress(iso);html+=`<div class="weekday-card"><div class="date-chip"><b>${asDate(iso).getDate()}</b><small>${dayNames[i].slice(0,3)}</small></div><div><h3>${dayNames[i]}</h3><p>${i<5?`${p.done}/${p.total} atividades · `:""}${h.success}/${h.total} situações sem cigarro${h.na?` · ${h.na} não ocorreram`:""}</p></div><button class="btn small" data-action="open-date" data-date="${iso}">Abrir</button></div>`}
+    html+='</div><div class="card">'+heading("Tarefas domésticas da semana","Distribuição padrão das 18h às 18h30");
+    for(let i=0;i<5;i++){let date=plusDays(mon,i);html+=`<div class="milestone"><div class="top"><h3>${dayNames[i]}</h3><span class="pill">${getTaskProgress(date).done}/${getTaskProgress(date).total} atividades totais</span></div><p>${esc(state.chores[i].map(x=>x.title).join(" · "))}</p></div>`}
+    html+='</div>';el("view-week").innerHTML=html;
+  }
+  function renderProgress(){let raw=weekRaw(selectedDate), html=`<div class="card">${heading("Plano de seis semanas","Cada nova etapa mantém todas as metas anteriores")}`;
+    state.habits.forEach((h,i)=>{const start=plusDays(state.startDate,i*7),end=plusDays(start,6);html+=`<div class="milestone ${weekIdx(selectedDate)===i&&raw>=0&&raw<6?"current":""}"><div class="top"><h3>Semana ${i+1} · ${esc(h.title)}</h3><span class="pill ${raw>=0&&(raw>=6||i<raw)?"accent":""}">${shortDate(start)}–${shortDate(end)}</span></div><p>${esc(h.guidance)}</p><p><strong>Checklist:</strong> ${esc(h.checks.map(c=>c.title).join("; "))}</p></div>`});
+    html+='</div><div class="card">'+heading("Histórico de cigarros","Últimos 14 dias até a data selecionada");
+    const days=Array.from({length:14},(_,i)=>plusDays(selectedDate,i-13));const values=days.map(d=>peek(d).cigarettes).filter(v=>v!==""&&Number.isFinite(Number(v))).map(Number);const max=Math.max(1,...values);
+    let found=false;
+    days.forEach(d=>{const v=peek(d).cigarettes;if(v===""||!Number.isFinite(Number(v)))return;found=true;const n=Math.max(0,Number(v));html+=`<div class="chart-row"><span>${shortDate(d)}</span><div class="bar"><span style="width:${Math.round(n/max*100)}%"></span></div><strong>${n}</strong></div>`});
+    html+=found?'':'<div class="muted-block">Preencha o campo “Cigarros fumados hoje” no Meu dia para visualizar o histórico.</div>';
+    const all=Object.entries(state.records).filter(([,r])=>r.cigarettes!==""&&Number.isFinite(Number(r.cigarettes))).sort(([a],[b])=>a.localeCompare(b));
+    if(all.length>=2){const first=Number(all[0][1].cigarettes),last=Number(all[all.length-1][1].cigarettes),diff=last-first;html+=`<div class="hint">Primeiro registro: <strong>${first}</strong> (${shortDate(all[0][0])}). Último: <strong>${last}</strong> (${shortDate(all[all.length-1][0])}). Diferença: <strong>${diff>0?"+":""}${diff}</strong> cigarro(s). Compare também a tendência semanal, não apenas um único dia.</div>`}
+    html+='</div>';el("view-progress").innerHTML=html;
+  }
+  function renderSettings(){let html=`<div class="card">${heading("Editar horários e atividades","Altere a rotina; os checklists de todos os dias usarão as novas descrições.")}<p class="editing-help">Os horários são textos livres: por exemplo, “06h00 – 07h00”. As alterações são salvas automaticamente quando você sai do campo.</p>`;
+    state.schedule.forEach((s,i)=>{html+=`<div class="edit-row"><input aria-label="Horário da atividade ${i+1}" data-type="edit-schedule" data-field="time" data-id="${esc(s.id)}" value="${esc(s.time)}"/><input aria-label="Descrição da atividade ${i+1}" data-type="edit-schedule" data-field="title" data-id="${esc(s.id)}" value="${esc(s.title)}"/><button class="btn small danger" data-action="remove-schedule" data-id="${esc(s.id)}">Excluir</button></div>`});
+    html+=`<div class="action-row" style="margin-top:12px"><button class="btn" data-action="add-schedule">+ Adicionar atividade</button></div></div>`;
+    html+=`<div class="card">${heading("Editar tarefas domésticas","Personalize cada dia da semana.")}<div style="margin-bottom:12px"><label for="editChoreDay" class="field-label">Dia para editar</label><select id="editChoreDay" data-type="choose-chore-day">${dayNames.map((d,i)=>`<option value="${i}" ${i===editChoreDay?"selected":""}>${d}</option>`).join("")}</select></div>`;
+    state.chores[editChoreDay].forEach(c=>{html+=`<div class="edit-row chore"><input aria-label="Descrição da tarefa" data-type="edit-chore" data-id="${esc(c.id)}" value="${esc(c.title)}"/><button class="btn small danger" data-action="remove-chore" data-id="${esc(c.id)}">Excluir</button></div>`});
+    html+=`<div class="action-row" style="margin-top:12px"><button class="btn" data-action="add-chore">+ Adicionar tarefa</button></div></div>`;
+    html+=`<div class="card">${heading("Editar plano antitabagismo","O início define os períodos de sete dias; as metas são cumulativas.")}<div><label class="field-label" for="planStart">Data de início da semana 1</label><input type="date" id="planStart" data-type="plan-start" value="${esc(state.startDate)}"/></div>`;
+    state.habits.forEach((h,i)=>{html+=`<div class="edit-week"><strong>Semana ${i+1}</strong><label class="field-label" for="habit-name-${i}">Nome do gatilho</label><input id="habit-name-${i}" data-type="edit-habit" data-index="${i}" data-field="title" value="${esc(h.title)}"/><label class="field-label" for="habit-guide-${i}">Estratégia de substituição</label><textarea id="habit-guide-${i}" data-type="edit-habit" data-index="${i}" data-field="guidance" rows="2">${esc(h.guidance)}</textarea>${h.checks.map(c=>`<label class="field-label" for="edit-${esc(c.id)}">Item do checklist</label><input id="edit-${esc(c.id)}" data-type="edit-habit-check" data-index="${i}" data-id="${esc(c.id)}" value="${esc(c.title)}"/>`).join("")}</div>`});
+    html+=`</div><div class="card">${heading("Backup e segurança","Os registros são armazenados apenas no navegador deste aparelho.")}<p class="editing-help">Exporte um arquivo para guardar no celular ou transferir para outro aparelho. Se limpar os dados do navegador, poderá perder os registros que não tiver exportado.</p><div class="action-row"><button class="btn primary" data-action="export-json">Baixar backup (.json)</button><button class="btn" data-action="export-csv">Baixar registros (.csv)</button><button class="btn" data-action="import-json">Restaurar backup</button><button class="btn danger" data-action="reset">Restaurar modelo inicial</button></div></div>`;
+    el("view-settings").innerHTML=html;
+  }
+  function render(){el("currentDate").value=selectedDate;document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x.dataset.tab===tab?"true":"false"));document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+tab));if(tab==="day")renderDay();else if(tab==="week")renderWeek();else if(tab==="progress")renderProgress();else renderSettings()}
+  function switchTab(next){tab=next;render();window.scrollTo({top:0,behavior:"smooth"})}
+  function freshId(prefix){return prefix+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+  el("currentDate").addEventListener("change",e=>{if(/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)){selectedDate=e.target.value;render()}});
+  el("prevDay").addEventListener("click",()=>{selectedDate=plusDays(selectedDate,-1);render()});
+  el("nextDay").addEventListener("click",()=>{selectedDate=plusDays(selectedDate,1);render()});
+  el("todayBtn").addEventListener("click",()=>{selectedDate=localISO(new Date());render()});
+  document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
+  document.querySelector("main").addEventListener("change",e=>{
+    const t=e.target,kind=t.dataset.type;if(!kind)return;
+    if(kind==="task"){record(t.dataset.date).tasks[t.dataset.id]=t.checked;save();renderDay()}
+    if(kind==="habit"){record(t.dataset.date).habits[t.dataset.id]=t.value;save();renderDay()}
+    if(kind==="record"){record(t.dataset.date)[t.dataset.field]=t.value;save()}
+    if(kind==="choose-chore-day"){editChoreDay=Number(t.value);renderSettings()}
+    if(kind==="plan-start"&&/^\d{4}-\d{2}-\d{2}$/.test(t.value)){state.startDate=t.value;save();toast("Data inicial atualizada.")}
+    if(kind==="edit-schedule"){const x=state.schedule.find(x=>x.id===t.dataset.id);if(x){x[t.dataset.field]=t.value;save()}}
+    if(kind==="edit-chore"){const x=state.chores[editChoreDay].find(x=>x.id===t.dataset.id);if(x){x.title=t.value;save()}}
+    if(kind==="edit-habit"){const x=state.habits[Number(t.dataset.index)];if(x){x[t.dataset.field]=t.value;save()}}
+    if(kind==="edit-habit-check"){const h=state.habits[Number(t.dataset.index)];const c=h?.checks.find(c=>c.id===t.dataset.id);if(c){c.title=t.value;save()}}
+  });
+  document.querySelector("main").addEventListener("input",e=>{const t=e.target;if(t.dataset.type==="record"){record(t.dataset.date)[t.dataset.field]=t.value;save()} });
+  document.querySelector("main").addEventListener("click",e=>{
+    const b=e.target.closest("button[data-action]");if(!b)return;let action=b.dataset.action;
+    if(action==="open-date"){selectedDate=b.dataset.date;switchTab("day");return}
+    if(action==="add-schedule"){state.schedule.push({id:freshId("s"),time:"00h00 – 00h00",title:"Nova atividade"});save();renderSettings()}
+    if(action==="remove-schedule"){if(confirm("Excluir esta atividade da rotina?")){state.schedule=state.schedule.filter(x=>x.id!==b.dataset.id);save();renderSettings()}}
+    if(action==="add-chore"){state.chores[editChoreDay].push({id:freshId("c"),title:"Nova tarefa"});save();renderSettings()}
+    if(action==="remove-chore"){if(confirm("Excluir esta tarefa deste dia?")){state.chores[editChoreDay]=state.chores[editChoreDay].filter(x=>x.id!==b.dataset.id);save();renderSettings()}}
+    if(action==="export-json"){download("backup-agenda-habitos-"+localISO(new Date())+".json",JSON.stringify(state,null,2),"application/json;charset=utf-8");toast("Backup gerado.")}
+    if(action==="export-csv"){const headings=["Data","Dia","Cigarros","Vontade 0-10","Atividades feitas","Atividades totais","Situacoes sem fumar","Situacoes nao ocorridas","Situacoes com cigarro","Observacoes"];const quote=v=>'"'+String(v??"").replace(/"/g,'""')+'"';const data=Object.keys(state.records).sort().map(d=>{const r=peek(d),p=getTaskProgress(d),h=getHabitProgress(d);return [d,dayNames[dayIndex(d)],r.cigarettes,r.urge,p.done,p.total,h.success,h.na,h.slip,r.notes].map(quote).join(";")});download("registro-habitos-"+localISO(new Date())+".csv","\uFEFF"+[headings.map(quote).join(";"),...data].join("\r\n"),"text/csv;charset=utf-8");toast("Planilha CSV gerada.")}
+    if(action==="import-json")el("importFile").click();
+    if(action==="reset"&&confirm("Tem certeza? Isso apagará os registros salvos e todas as personalizações deste navegador. Exporte um backup antes de continuar.")){state=defaults();save();render();toast("Modelo inicial restaurado.")}
+  });
+  el("importFile").addEventListener("change",async e=>{const file=e.target.files?.[0];if(!file)return;try{const candidate=JSON.parse(await file.text());if(!candidate||!Array.isArray(candidate.schedule)||!Array.isArray(candidate.chores)||candidate.chores.length!==7||!Array.isArray(candidate.habits)||candidate.habits.length!==6||!candidate.records||typeof candidate.records!=="object"||!/^\d{4}-\d{2}-\d{2}$/.test(candidate.startDate))throw Error("invalid");if(confirm("Substituir os dados atuais pelos registros do backup selecionado?")){state=candidate;save();render();toast("Backup restaurado com sucesso.")}}catch(err){alert("Este arquivo não é um backup válido desta agenda.")}e.target.value=""});
+  render();
+})();
+</script>
+</body>
+</html>
